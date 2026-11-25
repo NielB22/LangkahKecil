@@ -1,0 +1,22 @@
+# Dependensi
+node_modules/
+
+# Hasil build dan pengujian
+dist/
+coverage/
+
+# Konfigurasi deployment lokal
+.vercel/
+
+# Environment dan rahasia
+.env
+.env.*
+!.env.example
+
+# Log dan konfigurasi lokal
+*.log
+*.local
+
+# File sistem operasi
+.DS_Store
+Thumbs.db
