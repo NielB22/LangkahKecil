@@ -1,5 +1,10 @@
 import { BookOpen } from "lucide-react";
-import { Link, NavLink, Route, Routes } from "react-router";
+import { Link, NavLink, Route, Routes, useNavigate } from "react-router";
+import ActivityBuilderPage from "../pages/ActivityBuilderPage.jsx";
+
+import ActivitiesPage from "../pages/ActivitiesPage.jsx";
+import ActivityDetailPage from "../pages/ActivityDetailPage.jsx";
+import ActivityEditPage from "../pages/ActivityEditPage.jsx";
 
 function PageHeading({ title, children }) {
   return (
@@ -36,6 +41,9 @@ function LandingPage() {
 }
 
 export default function App() {
+
+  const navigate = useNavigate();
+
   return (
     <div className="flex min-h-dvh flex-col">
       <a
@@ -89,14 +97,34 @@ export default function App() {
       >
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route
-            path="/activities"
-            element={<PageHeading title="Aktivitas Saya" />}
-          />
+
+          <Route path="/activities" element={<ActivitiesPage />} />
+                    
           <Route
             path="/activities/new"
-            element={<PageHeading title="Buat Aktivitas" />}
+            element={
+              <ActivityBuilderPage
+                key="new"
+                onSaved={(saved) =>
+                  navigate(
+                    `/activities/${encodeURIComponent(saved.id)}`,
+                    { replace: true, state: { saved: true } },
+                  )
+                }
+              />
+            }
           />
+
+          <Route
+            path="/activities/:id"
+            element={<ActivityDetailPage />}
+          />
+
+          <Route
+            path="/activities/:id/edit"
+            element={<ActivityEditPage />}
+          />
+
           <Route
             path="*"
             element={
